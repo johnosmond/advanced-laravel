@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ScheduledClassContoller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,10 @@ Route::get('/', function () {
 
 Route::get('/dashboard', DashboardController::class)->middleware(['auth'])->name('dashboard');
 
+Route::resource('instructor/schedule', ScheduledClassContoller::class)
+->only(['index', 'create', 'store', 'destroy'])
+->middleware(['auth', 'role:instructor']);
+
 Route::get('/instructor/dashboard', function () {
     return view('instructor.dashboard');
 })->middleware(['auth', 'role:instructor'])->name('instructor.dashboard');
@@ -39,4 +44,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
