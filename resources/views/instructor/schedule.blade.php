@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-10 max-w-2xl text-gray-900 dark:text-gray-100">
+                <div class="p-10 max-w-2xl text-gray-900 dark:text-gray-100 divide-y">
                     <form action="{{ route('schedule.store') }}" method="POST" class="max-w-lg">
                         @csrf
                         <div class="space-y-6">
@@ -35,7 +35,7 @@
                                     <label class="text-sm">Date</label>
                                     <input type="date" name="date" value="{{ old('date') }}"
                                         class="block mt-2 w-full border-gray-300 focus:ring-0 focus:border-gray-500 dark:bg-slate-600"
-                                        min="{{ date('Y-m-d', strtotime('today')) }}">
+                                        min="{{ date('Y-m-d', strtotime('tomorrow')) }}">
                                 </div>
                                 <div class="flex-1">
                                     <label class="text-sm">Time</label>
