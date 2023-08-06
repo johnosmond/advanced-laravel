@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Models\ScheduledClass;
 use Illuminate\Support\Facades\Gate;
+use App\Policies\ScheduledClassPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -14,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        ScheduledClass::class => ScheduledClassPolicy::class,
     ];
 
     /**
@@ -24,6 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         Gate::define('schedule-class', function(User $user){
             return $user->role === 'instructor';
+        });
+        Gate::define('book-class', function(User $user){
+            return $user->role === 'member';
         });
     }
 }

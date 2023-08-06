@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ClassCancelled;
 use App\Models\ClassType;
 use App\Models\ScheduledClass;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class ScheduledClassContoller extends Controller
      */
     public function index()
     {
-        $scheduledClasses = auth()->user()->scheduledClasses()->where('date_time', '>', now())->oldest('date_time')->get();
+        $scheduledClasses = auth()->user()->scheduledClasses()->upcoming()->oldest('date_time')->get();
         return view('instructor.upcoming')->with('scheduledClasses', $scheduledClasses);
     }
 
@@ -105,10 +106,19 @@ class ScheduledClassContoller extends Controller
      */
     public function destroy(ScheduledClass $schedule)
     {
+        // dd($schedule->instructor_id);
+        // dd(auth()->user());
+        // dd(auth()->user()->can('delete', $schedule));
+
         if (auth()->user()->cannot('delete', $schedule)) {
             abort(403);
         }
+
+        ClassCancelled::dispatch($schedule);
+
+        $schedule->members()->detach();
         $schedule->delete();
+
         return redirect()->route('schedule.index')->with('success', 'Scheduled class deleted successfully.');
     }
 }
