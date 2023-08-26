@@ -34,9 +34,11 @@
                                 <form method="post" action="{{ route('booking.destroy', $class->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <x-danger-button class="px-3 py-1" onclick="return confirm('Are you sure?')">Cancel</x-danger-button>
+                                    <x-danger-button class="px-3 py-1"
+                                        onclick="return confirm('Are you sure?')">Cancel</x-danger-button>
                                 </form>
                             </div>
+                            =
                         </div>
                     @empty
                         <div>

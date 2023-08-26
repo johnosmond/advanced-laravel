@@ -106,10 +106,6 @@ class ScheduledClassContoller extends Controller
      */
     public function destroy(ScheduledClass $schedule)
     {
-        // dd($schedule->instructor_id);
-        // dd(auth()->user());
-        // dd(auth()->user()->can('delete', $schedule));
-
         if (auth()->user()->cannot('delete', $schedule)) {
             abort(403);
         }
